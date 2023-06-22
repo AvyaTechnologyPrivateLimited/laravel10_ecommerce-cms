@@ -13,4 +13,9 @@ class ProductController extends Controller
     {
         return Product::GetData()->get();
     }
+
+    public function show(Product $product)
+    {
+        return $product;
+    }
 }

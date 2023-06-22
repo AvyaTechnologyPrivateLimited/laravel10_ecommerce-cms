@@ -38,6 +38,7 @@ Route::middleware(['api'])->group(function() {
 
     Route::group(['prefix'=>'products'], function() {
         Route::get('/', [ProductController::class, 'products']);
+        Route::get('/{product:slug}', [ProductController::class, 'show']);
     });
 
     Route::group(['prefix'=>'filters'], function() {
