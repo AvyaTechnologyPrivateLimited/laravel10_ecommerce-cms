@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('product_details')->nullable();
             $table->string('slug')->unique();
             $table->integer('price');
+            $table->integer('quantity')->default(20);//we can change it later
             $table->string('image')->nullable();
             $table->string('badge')->nullable();
             $table->enum('status', ['Active', 'Inactive'])->default('Active');

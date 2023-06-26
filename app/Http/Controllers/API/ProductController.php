@@ -16,6 +16,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        $product = Product::GetData()->where('status',1)->find($product->id);
         return $product;
     }
 }

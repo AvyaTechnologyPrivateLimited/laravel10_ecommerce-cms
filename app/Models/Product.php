@@ -12,7 +12,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes, HasSlug;
     
-    protected $fillable = ['category_id', 'slug', 'title', 'price', 'image', 'status', 'description', 'badge', 'features', 'product_details'];
+    protected $fillable = ['category_id', 'slug', 'title', 'price', 'image', 'status', 'description', 'badge', 'features', 'product_details', 'quantity'];
 
     /**
      * Get the options for generating the slug.
@@ -41,6 +41,7 @@ class Product extends Model
             'badge',
             'features',
             'product_details',
+            'quantity'
         )
         ->with(['api_colors', 'api_sizes', 'api_tags'])
         ->where('status',1);
@@ -91,5 +92,9 @@ class Product extends Model
     public function getImageAttribute($value)
     {
         return $value ? asset('uploads/'.$value) : asset('dummy.jpg');
+    }
+    public function getOriginalImageAttribute()
+    {
+        return $this->attributes['image'];
     }
 }

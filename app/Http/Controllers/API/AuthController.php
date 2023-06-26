@@ -34,7 +34,7 @@ class AuthController extends Controller
         $user = Auth::user();
         $token = JWTAuth::fromUser($user);
 
-        return $this->respondWithToken($token, $user->name, 'Logged in successfully');
+        return $this->respondWithToken($token, $user, 'Logged in successfully');
     }
 
     public function register(Request $request)
@@ -58,7 +58,7 @@ class AuthController extends Controller
 
         $token = JWTAuth::fromUser($user);
         
-        return $this->respondWithToken($token, $user->name, 'Your account has been created successfully.');
+        return $this->respondWithToken($token, $user, 'Your account has been created successfully.');
 
     }
 
@@ -78,10 +78,12 @@ class AuthController extends Controller
     {
         return $this->respondWithToken(auth()->refresh());
     }*/
-    protected function respondWithToken($token, $name, $msg)
+    protected function respondWithToken($token, $user, $msg)
     {
         return response()->json([
-            'name' => $name,
+            'name' => $user->name,
+            'phone' => $user->phone,
+            'email' => $user->email,
             'message' => $msg,
             'access_token' => $token,
             'token_type' => 'bearer',
