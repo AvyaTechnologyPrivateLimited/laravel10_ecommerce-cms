@@ -2,7 +2,7 @@
 
 ## 🚀 Av Demo Ecom
 This is an ecommerce demo app, developed by Avya Tech Pvt. Ltd.
-
+##
 ## Technology Used
 `Frontend` Next.js v13.4.4, Tailwindcss
 
