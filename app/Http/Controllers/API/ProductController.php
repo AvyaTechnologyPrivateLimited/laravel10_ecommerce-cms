@@ -6,17 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 
 use Illuminate\Http\Request;
+use Log, JWTAuth;
 
 class ProductController extends Controller
 {
-    public function products()
+    public function products(Request $request)
     {
-        return Product::GetData()->get();
+        return Product::GetData($request)
+                        ->Filters($request)
+                        ->paginate(config('constants.pagination'));
     }
 
     public function show(Product $product)
     {
-        $product = Product::GetData()->where('status',1)->find($product->id);
+        $product = Product::GetData()
+                            ->find($product->id);
         return $product;
     }
 }

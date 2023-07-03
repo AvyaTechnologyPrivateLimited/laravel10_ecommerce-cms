@@ -8,7 +8,8 @@ use App\Http\Controllers\API\{
     ProductController,
     FilterController,
     CartController,
-    CheckoutController
+    CheckoutController,
+    ProductWishlistController
 };
 use App\Http\Controllers\{
     TestController
@@ -61,6 +62,10 @@ Route::middleware(['api'])->group(function() {
             Route::post('/update-shipping-address', [CheckoutController::class, 'shipping_address']);
             Route::get('/checkout', [CheckoutController::class, 'checkout']);
             Route::get('/countries', [CheckoutController::class, 'countries']);
+        });
+
+        Route::group(['prefix'=>'wishlist'], function() {
+            Route::post('/toggle', [ProductWishlistController::class, 'toggle_wishlist']);
         });
 
         

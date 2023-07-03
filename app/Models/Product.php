@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use DB, Log, JWTAuth;
+use App\Helpers\UserHelper;
 
 class Product extends Model
 {
@@ -29,22 +31,61 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function scopeGetData($q)
+    public function scopeGetData($q, $request)
     {
+        $user = UserHelper::getUserFromJwtToken($request);
         return $q->select(
-            'title as name',
-            'slug',
-            'id',
+            'products.title as name',
+            'products.slug',
+            'products.id',
             'description',
             'price',
-            'image',
+            'products.image',
             'badge',
             'features',
             'product_details',
             'quantity'
         )
-        ->with(['api_colors', 'api_sizes', 'api_tags'])
-        ->where('status',1);
+        ->with([
+            'api_colors', 
+            'api_sizes', 
+            'api_tags', 
+            'wishlist' => function ($queryBuilder) use ($user) {
+                $queryBuilder->where('user_id', $user->id??0);
+            }])
+       
+        ->where('products.status',1);
+    }
+
+    public function wishlist()
+    {
+        return $this->hasOne(ProductWishlist::class);
+    }
+
+    public function scopeFilters($q, $request)
+    {
+        if($request->category) {
+            return $q->leftJoin('categories', 'products.category_id', '=', 'categories.id')
+                    ->whereIn('categories.slug', explode(',',$request->category));
+        }
+
+        if($request->color) {
+            return $q->leftJoin('color_product', 'products.id', '=', 'color_product.product_id')
+                    ->leftJoin('colors', 'color_product.color_id', '=', 'colors.id')
+                    ->whereIn('colors.slug', explode(',',strtolower($request->color)));
+        }
+
+        if($request->sizes) {
+            $size_lower = trim(strtolower($request->sizes));
+            return $q->leftJoin('product_size', 'products.id', '=', 'product_size.product_id')
+                    ->leftJoin('sizes', 'product_size.size_id', '=', 'sizes.id')
+                    ->whereIn('sizes.slug', explode(',',$size_lower));
+        }
+
+        if($request->price) {
+            $price = explode(',', $request->price);
+            return $q->whereBetween('products.price', $price);
+        }
     }
 
     public function colors()
