@@ -10,7 +10,6 @@ class TestController extends Controller
 {
     public function test()
     {
-        return 'md asif';
         return $cart = CartHelper::getContent();
         dd($cart);
         return Product::first()->originalImage;

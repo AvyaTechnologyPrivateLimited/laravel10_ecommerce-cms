@@ -64,10 +64,28 @@ class Product extends Model
 
     public function scopeFilters($q, $request)
     {
-        if($request->category) {
+
+        if($request->sort) {
+
+            if($request->sort == 'Newest') {
+                return $q->orderBy('products.id', 'DESC');
+            }
+
+            if($request->sort == 'Price-low-high') {
+                return $q->orderBy('products.price', 'ASC');
+            }
+
+            if($request->sort == 'Price-high-low') {
+                return $q->orderBy('products.price', 'DESC');
+            }
+            
+        }
+
+        if($request->category && !in_array('all-categories', $request->category)) {
             return $q->leftJoin('categories', 'products.category_id', '=', 'categories.id')
                     ->whereIn('categories.slug', explode(',',$request->category));
-        }
+        } 
+
 
         if($request->color) {
             return $q->leftJoin('color_product', 'products.id', '=', 'color_product.product_id')
@@ -86,6 +104,10 @@ class Product extends Model
             $price = explode(',', $request->price);
             return $q->whereBetween('products.price', $price);
         }
+
+
+        
+
     }
 
     public function colors()

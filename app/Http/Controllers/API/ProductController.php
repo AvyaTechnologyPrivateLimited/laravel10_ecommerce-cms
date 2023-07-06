@@ -17,9 +17,9 @@ class ProductController extends Controller
                         ->paginate(config('constants.pagination'));
     }
 
-    public function show(Product $product)
+    public function show(Request $request, Product $product)
     {
-        $product = Product::GetData()
+        $product = Product::GetData($request)
                             ->find($product->id);
         return $product;
     }

@@ -12,7 +12,8 @@ class UserHelper
         if($token && $token!=='undefined')
         {
             try {
-                return JWTAuth::setToken($token)->toUser();
+                $user = JWTAuth::setToken($token)->toUser();
+                return $user;
             } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
                 //exception
                 //Log::error($e);
