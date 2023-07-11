@@ -9,7 +9,8 @@ use App\Http\Controllers\API\{
     FilterController,
     CartController,
     CheckoutController,
-    ProductWishlistController
+    ProductWishlistController,
+    FrontController
 };
 use App\Http\Controllers\{
     TestController
@@ -26,12 +27,20 @@ use App\Http\Controllers\{
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::middleware(['auth:api', 'api'])->group(function() {
+    Route::get('/user', [AuthController::class, 'getaccount']);
+    Route::post('/update-user', [AuthController::class, 'update_user']);
+    Route::post('/update-password', [AuthController::class, 'update_password']);
 });
 
-
 Route::get('/test', [TestController::class, 'test']);
+
+Route::get('/country', [FrontController::class, 'get_countries']);
+
 
 Route::middleware(['api'])->group(function() {
     Route::post('/login', [AuthController::class, 'login']);

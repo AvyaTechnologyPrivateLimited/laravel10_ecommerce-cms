@@ -14,7 +14,7 @@ class UserHelper
             try {
                 $user = JWTAuth::setToken($token)->toUser();
                 return $user;
-            } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+            } catch (\Exception $e) {
                 //exception
                 //Log::error($e);
             }
