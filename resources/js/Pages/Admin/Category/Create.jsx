@@ -38,11 +38,20 @@ export default function Create({ auth, status_options }) {
         >
             <Head title="Create Category" />
            
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div className='body flex-grow-1 px-3'>
+            <div className='container-lg'>
+            <div className="card mb-4">
+  <div className="card-header">
+  <strong>Category</strong>
+  <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded pull-right" href={route("admin.category.index")}>
+    <span className="hidden md:inline">Back</span>
+</Link>
+  </div>
+  <div className="card-body">
+                        <div className="text-gray-900">
+                        
                             
-                            <form onSubmit={handleSubmit} className="bg-white px-8 pt-6 pb-8 mb-4">
+                            <form onSubmit={handleSubmit} className="bg-white">
                                 <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2">
                                     Title
@@ -111,8 +120,12 @@ export default function Create({ auth, status_options }) {
                             </form>
                     
                     </div>
-                </div>
-            </div>
+                    
+                        </div>
+  </div>
+</div>
+</div>
+
         </AuthenticatedLayout>
     );
 }

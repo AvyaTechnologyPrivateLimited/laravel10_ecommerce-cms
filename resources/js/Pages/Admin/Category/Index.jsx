@@ -26,8 +26,7 @@ export default function Index({ auth, data }) {
 </Link>
   </div>
   <div className="card-body">
-  <div className="">
-                        <div className="text-gray-900">
+                        <div className="table-responsive">
                         
                         <table className="w-full whitespace-nowrap">
                         <thead>
@@ -99,7 +98,6 @@ export default function Index({ auth, data }) {
                         </div>
                     </div>
   </div>
-</div>
 </div>
 </div>
 
