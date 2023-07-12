@@ -14,17 +14,20 @@ export default function Index({ auth, data }) {
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Category</h2>}
         >
-            <Head title="Category" />
+            <Head title="Create Category" />
 
-            <div className="py-12">
-            
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href={route("admin.category.create")}>
-                    <span className="hidden md:inline">Create</span>
-                </Link>
-                <br />
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
+          <div className='body flex-grow-1 px-3'>
+            <div className='container-lg'>
+            <div className="card mb-4">
+  <div className="card-header">
+  <strong>Category</strong>
+  <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded pull-right" href={route("admin.category.create")}>
+    <span className="hidden md:inline">Create</span>
+</Link>
+  </div>
+  <div className="card-body">
+  <div className="">
+                        <div className="text-gray-900">
                         
                         <table className="w-full whitespace-nowrap">
                         <thead>
@@ -95,8 +98,12 @@ export default function Index({ auth, data }) {
                     
                         </div>
                     </div>
-                </div>
-            </div>
+  </div>
+</div>
+</div>
+</div>
+
+           
         </AuthenticatedLayout>
     );
 }
