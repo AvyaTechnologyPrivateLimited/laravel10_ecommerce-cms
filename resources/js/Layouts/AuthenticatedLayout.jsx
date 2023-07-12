@@ -119,6 +119,8 @@ export default function Authenticated({ user, header, children }) {
           </nav>
         </div>
       </header>
+
+    <main>{children}</main>
     
     <footer className="footer">
         <div><a href="https://coreui.io">Demo Ecomm App </a> © 2023 Avyatech.</div>
